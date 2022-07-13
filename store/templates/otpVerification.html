@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post" action="/otpVerification">
+    {% csrf_token %}
+    <div class="container">
+
+        <h3>Enter OTP</h3>
+        <hr>
+        <p><small><i>OTP is sent to your mail.</i></small></p>
+            <br />
+            
+        <div class="input-group col-lg-9 mx-auto row">
+            
+            <table class="center mx-auto">
+                <tr >
+                    <td class="col-3">
+                        <input type="text" class="form-control" name="otp" placeholder="OTP" pattern="[0-9]{4}" required>
+                    </td>
+                    <td class="col-3">
+                        <input type="submit" class="btn btn-primary form-control" >
+                    </td>
+                </tr>
+                
+            </table>
+            
+            
+        </div>
+        <br />
+            
+            <p>
+                <small>
+                    <i>Refresh the page to resend OTP.</i>
+                </small>
+                
+            </p>
+        
+    </div>
+    
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'base.html' %} {% load cart %}
+{% load custom %}
+
+{% block content %} 
+    <div class="container">
+        <div class="col-lg-9 mx-auto">
+            <div class="row mx-auto">
+              <h3>Shopping Cart</h3>
+              <br />
+              <br />
+              <hr>
+              {% if products|total_price:request.session.cart %}
+              <table class="table">
+                <tbody>
+              {% for product in products %}
+              {% if product|cart_products:request.session.cart %}
+            
+              <tr class="primary">
+                <th scope="row">
+                  <img src="{{product.image.url}}"  class="card-img-top" style="width:80px;height:100px;" alt="..." />
+                </th>
+                <td>{{product.name}}</td>
+                <td>{{ product.price|custom_currency }}</td>
+                <td>{{product|quantity_in_cart:request.session.cart}}</td>
+
+                <td>
+                  <div class="row">
+                    <form action="/" method="post" class="col-2">
+                      {% csrf_token %}
+                      <input
+                        hidden
+                        type="text"
+                        name="product"
+                        value="{{product.id}}"
+                      />
+    
+                      <input
+                        hidden
+                        type="text"
+                        name="remove_product"
+                        value="True"
+                      />
+    
+                      <input
+                      type="submit"
+                      class="btn btn-secondary"
+                      value="-"
+                      />
+                    </form>
+                    
+                    <div class="text-center col"> {{ product | quantity_in_cart:request.session.cart }} in cart</div>
+                    <form action="/" method="post" class="col-2">
+                      {% csrf_token %}
+                    <input
+                      hidden
+                      type="text"
+                      name="product"
+                      value="{{product.id}}"
+                    />
+    
+                      <input
+                      type="submit"
+                      class="btn btn-secondary"
+                      value="+"
+                    />
+                    </form>
+                  </div>
+                </td>
+
+                <td class="text-center">
+                  {{product|product_total:request.session.cart|custom_currency}}
+                </td>
+              </tr>
+
+              
+              {% endif %}
+      
+              {% endfor %}
+              </tbody>
+              <tfoot>
+                
+                <th>Total</th>
+                <th>{{ products|total_price:request.session.cart}}</th>
+              </tfoot>
+            </table>
+            <div>
+              
+            </div>
+            <div  style = "display: flex; justify-content: flex-end">
+              <button type="button" class="btn btn-outline-info btn-sm col-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Proceed to Buy</button>
+            </div>
+
+            <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <form action="/checkout" method="post"> {% csrf_token %}
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3>Enter your address</h3>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                          <label for="">Address</label>
+                          <textarea 
+                            type="textarea"
+                            name="address"
+                            id=""
+                            class="form-control"
+                            aria-describedby="helpId"
+                            style="height: 100px;"
+                            required
+                          ></textarea>
+                        </div>
+                        <div>
+                          <label for="">Phone Number</label>
+                          <input
+                            type="tel"
+                            name="phone"
+                            id=""
+                            class="form-control"
+                            placeholder="9876543210"
+                            aria-describedby="helphelpId"
+                            required
+                            
+                          />
+                          <!-- pattern="[1-9]{1}[0-9]{9}"
+                            required -->
+                        </div>
+
+                        <!-- Total value -->
+                        <input hidden type="number" name="totalPrice" value="{{ products|total_price:request.session.cart}}" />
+                        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cart</button>
+                      <input type="submit" class="btn btn-primary" value="Checkout"/>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            {% else %}
+            <h2>Your cart is empty.</h2>
+            {% endif %}
+
+              
+            </div>
+            
+          </div>
+          
+    </div>
+    
+{% endblock %}

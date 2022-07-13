@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% load cart %}
+{% load custom %}
+
+{% block content %} 
+    <div class="container">
+        <div class="col-lg-9 mx-auto">
+            <div class="row mx-auto">
+              <h3>Orders</h3>
+              <br />
+              <br />
+              <hr>
+
+              
+              <table class="table">
+
+                <thead class="primary">
+                  <td>OrderId</td>
+                  <td>Order Date</td>
+                  <td>Order Total</td>
+  
+                  
+                  <td class="text-center">
+                    Order Status
+                  </td>
+                </thead>
+                {% for orderList in orderListData %}
+                <tr class="primary">
+                  <td>{{orderList.id}}</td>
+                  <td>{{orderList.date}}</td>
+                  <td>{{orderList.order_total}}</td>
+  
+                  
+                  <td class="text-center">
+                    {{orderList.status}}
+                  </td>
+                </tr>
+                {% endfor %}
+  
+              
+                <tbody>
+              
+              
+                
+              </tbody>
+              
+            </table>
+            <div>
+              
+            </div> 
+            </div>
+            
+          </div>
+          
+    </div>
+    
+{% endblock %}

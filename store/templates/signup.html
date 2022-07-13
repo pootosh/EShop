@@ -1,0 +1,103 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="p-4 m-4">
+    <div class="mx-auto p-3 col-lg-4 border rounded">
+      <!-- Signup Text   -->
+      <div class="form-group mb-3">
+        <h3>Sign UP</h3>
+      </div>
+
+      <form action="/signup" method="post"> 
+        {% csrf_token %}
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+          <h4 >{{message}}</h4>
+        </div>
+        {% endif %}
+        <!-- First Name -->
+        <div class="form-group mb-3">
+          <label for="">First Name</label>
+          <input
+            type="text"
+            name="fname"
+            id=""
+            class="form-control"
+            aria-describedby="helpId"
+            required
+          />
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group mb-3">
+          <label for="">Last Name</label>
+          <input
+            type="text"
+            name="lname"
+            id=""
+            class="form-control"
+            aria-describedby="helpId"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group mb-3">
+          <label for="">Email</label>
+          <input
+            type="email"
+            name="email"
+            id=""
+            class="form-control"
+            placeholder="example@eshop.com"
+            aria-describedby="helpId"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-3">
+          <label for="">Password</label>
+          <input
+            type="password"
+            name="password"
+            id=""
+            class="form-control"
+            placeholder="***********"
+            aria-describedby="helphelpId"
+            required
+          />
+        </div>
+
+        <!-- Phone Number -->
+
+        <div class="form-group mb-4">
+          <label for="">Phone Number</label>
+          <input
+            type="tel"
+            name="phone"
+            id=""
+            class="form-control"
+            placeholder="9876543210"
+            aria-describedby="helphelpId"
+            pattern="[1-9]{1}[0-9]{9}"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <div class="form-group">
+            <input
+              type="submit"
+              class="btn btn-info btn-sm"
+              value="Create An Account"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
